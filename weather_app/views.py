@@ -32,3 +32,7 @@ class WeatherDataViewSet(viewsets.ViewSet):
 
         serializer = WeatherDataSerializer(weather_data)
         return Response(serializer.data)
+
+def index(request):
+    google_maps_api_key = settings.GOOGLE_MAPS_API_KEY
+    return render(request, 'index.html', {'google_maps_api_key': google_maps_api_key})
