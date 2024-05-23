@@ -16,12 +16,30 @@
                 document.getElementById('lon').value = event.latLng.lng();
             });
         }
+        async function getWeatherData(event) {
+            event.preventDefault();
+            const lat = document.getElementById('lat').value;
+            const lon = document.getElementById('lon').value;
+            const dataType = document.getElementById('data_type').value;
+            const response = await fetch(`/api/weather/?lat=${lat}&lon=${lon}&data_type=${dataType}`);
+            const data = await response.json();
+            document.getElementById('weather-data').textContent = JSON.stringify(data, null, 2);
+        }
     </script>
+    <style>
+        #weather-data {
+            white-space: pre-wrap;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 <h1>Weather Forecast App</h1>
     <div id="map" style="height: 500px; width: 100%;"></div>
-    <form method="get" action="/api/weather/">
+    <form id="weather-form" method="get" onsubmit="getWeatherData(event)">
         <label for="lat">Latitude:</label>
         <input type="text" id="lat" name="lat" required>
         <br>
@@ -38,5 +56,6 @@
         <br>
         <button type="submit">Get Weather</button>
     </form>
+    <pre id="weather-data"></pre>
 </body>
 </html>
