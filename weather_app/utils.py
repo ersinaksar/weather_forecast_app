@@ -1,11 +1,16 @@
+import os
 import requests
 import logging
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
+# load .env file
+load_dotenv()
+
 
 def fetch_weather_data(lat, lon, data_type):
-    api_key = 'YOUR_API_KEY'  # Buraya kendi API anahtarınızı ekleyin
+    api_key = os.getenv('OPENWEATHER_API_KEY')  # get the API key from.env file
     url = f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=hourly,daily&appid={api_key}"
 
     logger.info(f"Fetching weather data from URL: {url}")
