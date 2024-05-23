@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from weather_app.views import WeatherDataViewSet
+from weather_app.views import WeatherDataViewSet, index
 
 router = DefaultRouter()
 router.register(r'weather', WeatherDataViewSet, basename='weather')
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', include(router.urls)),
+    path('', index, name='index'),  # Main page route
 ]
