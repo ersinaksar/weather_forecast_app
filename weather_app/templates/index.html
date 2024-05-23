@@ -25,6 +25,15 @@
             const data = await response.json();
             document.getElementById('weather-data').textContent = JSON.stringify(data, null, 2);
         }
+        async function getWeatherChart(event) {
+            event.preventDefault();
+            const lat = document.getElementById('chart-lat').value;
+            const lon = document.getElementById('chart-lon').value;
+            const dataType = document.getElementById('chart-data_type').value;
+            const response = await fetch(`/chart/?lat=${lat}&lon=${lon}&data_type=${dataType}`);
+            const chartDiv = document.getElementById('weather-chart');
+            chartDiv.innerHTML = await response.text();
+        }
     </script>
 
     <style>
@@ -40,6 +49,8 @@
 <body>
 <h1>Weather Forecast App</h1>
     <div id="map" style="height: 500px; width: 100%;"></div>
+
+    <!-- Weather Data Form -->
     <form id="weather-form" method="get" onsubmit="getWeatherData(event)">
         <label for="lat">Latitude:</label>
         <input type="text" id="lat" name="lat" required>
@@ -57,15 +68,17 @@
         <br>
         <button type="submit">Get Weather</button>
     </form>
-    <form method="get" action="/weather_chart/">
-        <label for="lat">Latitude:</label>
-        <input type="text" name="lat" required>
+
+    <!-- Weather Chart Form -->
+    <form id="chart-form" method="get"  action="/chart/">
+        <label for="chart-lat">Latitude:</label>
+        <input type="text" id="chart-lat" name="lat" required>
         <br>
-        <label for="lon">Longitude:</label>
-        <input type="text" name="lon" required>
+        <label for="chart-lon">Longitude:</label>
+        <input type="text" id="chart-lon" name="lon" required>
         <br>
-        <label for="data_type">Data Type:</label>
-        <select name="data_type" required>
+        <label for="chart-data_type">Data Type:</label>
+        <select id="chart-data_type" name="data_type" required>
             <option value="hourly">Hourly forecast for 48 hours</option>
             <option value="daily">Daily forecast for 7 days</option>
         </select>
@@ -73,5 +86,6 @@
         <button type="submit">Get Weather Chart</button>
     </form>
     <pre id="weather-data"></pre>
+    <div id="weather-chart"></div>
 </body>
 </html>
