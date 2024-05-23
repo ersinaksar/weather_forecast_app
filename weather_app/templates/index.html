@@ -26,6 +26,7 @@
             document.getElementById('weather-data').textContent = JSON.stringify(data, null, 2);
         }
     </script>
+
     <style>
         #weather-data {
             white-space: pre-wrap;
@@ -55,6 +56,21 @@
         </select>
         <br>
         <button type="submit">Get Weather</button>
+    </form>
+    <form method="get" action="/weather_chart/">
+        <label for="lat">Latitude:</label>
+        <input type="text" name="lat" required>
+        <br>
+        <label for="lon">Longitude:</label>
+        <input type="text" name="lon" required>
+        <br>
+        <label for="data_type">Data Type:</label>
+        <select name="data_type" required>
+            <option value="hourly">Hourly forecast for 48 hours</option>
+            <option value="daily">Daily forecast for 7 days</option>
+        </select>
+        <br>
+        <button type="submit">Get Weather Chart</button>
     </form>
     <pre id="weather-data"></pre>
 </body>
